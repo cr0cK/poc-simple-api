@@ -6,9 +6,11 @@ const server = new Server()
 
 server
   .bindLogger(logger)
-  .configureServers()
-  .configureControllers()
+  .configureServer()
+  .configureRouter()
   .start()
+  .then(serv => serv.connectToDB())
   .catch(err => {
     logException(logger, err, 'An error has occurred when starting the server')
+    process.exit(1)
   })

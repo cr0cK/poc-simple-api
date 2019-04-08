@@ -3,7 +3,9 @@ import * as colors from 'colors'
 import * as express from 'express'
 import * as http from 'http'
 import * as morgan from 'morgan'
-import { registerControllers } from './controllers'
+import { createConnection } from 'typeorm'
+import { setConnection } from './db'
+import { getRouter } from './getRouter'
 import { getConfig } from './libs/config'
 import { logException } from './libs/logException'
 import { ILogger } from './libs/logger'
@@ -48,7 +50,7 @@ export default class Server {
   /**
    * Initialize servers.
    */
-  configureServers() {
+  configureServer() {
     this.httpServer = http.createServer(this.app)
     return this
   }
@@ -56,8 +58,9 @@ export default class Server {
   /**
    * Configure the index router.
    */
-  configureControllers(): Server {
-    this.app.use('/', registerControllers())
+  configureRouter(): Server {
+    this.app.use('/', getRouter())
+
     return this
   }
 
@@ -94,6 +97,14 @@ export default class Server {
         }
       )
     })
+  }
+
+  /**
+   * Connect to the DB and save the connection.
+   */
+  async connectToDB(): Promise<void> {
+    const connection = await createConnection()
+    setConnection(connection)
   }
 
   /**
