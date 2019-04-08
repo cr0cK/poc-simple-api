@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": "src",
+    "target": "es2017",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "outDir": "dist",
+    "lib": ["esnext"],
+    "plugins": []
+  },
+  "exclude": [
+    "dist",
+    "trash",
+    "node_modules"
+  ]
+}
