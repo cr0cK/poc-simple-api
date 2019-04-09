@@ -8,6 +8,8 @@ import { connect } from './db'
 import { getConfig } from './libs/config'
 import { logException } from './libs/logException'
 import { ILogger } from './libs/logger'
+import { loadSchemas } from './libs/validate'
+import { schemasDir } from './paths'
 import { routerDashboard } from './routers/dashboard'
 
 export default class Server {
@@ -65,6 +67,14 @@ export default class Server {
       res.status(404).send()
     })
 
+    return this
+  }
+
+  /**
+   * Load JSON schemas.
+   */
+  configureSchemas(): Server {
+    loadSchemas(schemasDir)
     return this
   }
 

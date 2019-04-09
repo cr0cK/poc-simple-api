@@ -8,6 +8,7 @@ server
   .bindLogger(logger)
   .configureServer()
   .configureRouters()
+  .configureSchemas()
   .start()
   .then(serv => serv.connectToDB())
   .catch(err => {

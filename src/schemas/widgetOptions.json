@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "GET /dashboards/:dashboardId/widgets/:widgetId/options",
+  "definitions": {
+    "widgetOptions": {
+      "type": "object",
+      "required": ["type", "series"],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "series": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["dataOption", "displayOption"],
+            "properties": {
+              "dataOption": {
+                "$ref": "#/definitions/dataOption"
+              },
+              "displayOption": {
+                "$ref": "#/definitions/displayOption"
+              }
+            }
+          }
+        }
+      }
+    },
+    "dataOption": {
+      "type": "object",
+      "properties": {
+        "directoryId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "displayOption": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$ref": "#/definitions/widgetOptions"
+}

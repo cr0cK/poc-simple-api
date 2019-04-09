@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "GET /dashboards/:dashboardId/widgets",
+  "definitions": {
+    "dashboardWidgets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "posX", "posY", "width", "height"],
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "posX": {
+            "type": "number"
+          },
+          "posY": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
+  "$ref": "#/definitions/dashboardWidgets"
+}

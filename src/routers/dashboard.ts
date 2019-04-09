@@ -7,6 +7,7 @@ import Dashboard from '../entities/Dashboard'
 import { logException } from '../libs/logException'
 import { logger } from '../libs/logger'
 import { sendError } from '../libs/sendError'
+import { assertOutput } from '../libs/assertOutput'
 
 export function routerDashboard() {
   const router = Router()
@@ -18,6 +19,8 @@ export function routerDashboard() {
     try {
       const ctrl = new ControllerDashboard()
       const dashboards = await ctrl.getDashboards()
+
+      assertOutput('dashboards.json', dashboards)
       res.json(dashboards)
     } catch (err) {
       logException(logger, err)
@@ -35,6 +38,7 @@ export function routerDashboard() {
       const ctrl = new ControllerDashboard()
       const dashboard = await ctrl.createDashboard(payload)
 
+      assertOutput('dashboard.json', dashboard)
       res.json(dashboard)
     } catch (err) {
       logException(logger, err)
@@ -48,11 +52,12 @@ export function routerDashboard() {
   router.get('/:dashboardId/widgets', async (req, res) => {
     try {
       const ctrl = new ControllerDashboardWidget()
-      const dashboards = await ctrl.getWidgets({
+      const widgets = await ctrl.getWidgets({
         dashboard: req.params.dashboardId
       })
 
-      res.json(dashboards)
+      assertOutput('dashboardWidgets.json', widgets)
+      res.json(widgets)
     } catch (err) {
       logException(logger, err)
       sendError(res, err)
@@ -67,12 +72,12 @@ export function routerDashboard() {
       const ctrl = new ControllerWidgetOption()
 
       // retrieve options
-      const options = await ctrl.getOptions({
+      const rawOptions = await ctrl.getOptions({
         widget: req.params.widgetId
       })
 
       // group options by optionType / optionKey
-      const optionsGroupByType = options.reduce((acc, option) => {
+      const optionsGroupByType = rawOptions.reduce((acc, option) => {
         const existingValue = get(acc, [option.optionType.type, option.key])
 
         // concatenate values into an array if the key is already present
@@ -84,12 +89,13 @@ export function routerDashboard() {
         return acc
       }, {})
 
-      const results = {
+      const options = {
         type: 'TODO',
         series: [optionsGroupByType]
       }
 
-      res.json(results)
+      assertOutput('widgetOptions.json', options)
+      res.json(options)
     } catch (err) {
       logException(logger, err)
       sendError(res, err)
