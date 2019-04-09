@@ -2,8 +2,10 @@ import * as faker from 'faker'
 import { connect } from '../db'
 import Dashboard from '../entities/Dashboard'
 import DashboardWidget from '../entities/DashboardWidget'
+import OptionType, { OptionTypeEnum } from '../entities/OptionType'
 import { logException } from '../libs/logException'
 import { logger } from '../libs/logger'
+import WidgetOption from '../entities/WidgetOption'
 
 async function populate() {
   const connection = await connect()
@@ -29,7 +31,7 @@ async function populate() {
     /**
      * Populate some dashboards widgets
      */
-    await transEntityMngr.save(DashboardWidget, {
+    const dashboardWidget1 = await transEntityMngr.save(DashboardWidget, {
       title: faker.random.words(3),
       posX: 0,
       posY: 0,
@@ -38,7 +40,7 @@ async function populate() {
       dashboard: dashboard1
     })
 
-    await transEntityMngr.save(DashboardWidget, {
+    const dashboardWidget2 = await transEntityMngr.save(DashboardWidget, {
       title: faker.random.words(3),
       posX: 0,
       posY: 0,
@@ -47,13 +49,55 @@ async function populate() {
       dashboard: dashboard1
     })
 
-    await transEntityMngr.save(DashboardWidget, {
+    const dashboardWidget3 = await transEntityMngr.save(DashboardWidget, {
       title: faker.random.words(3),
       posX: 0,
       posY: 0,
       width: 400,
       height: 300,
       dashboard: dashboard2
+    })
+
+    /**
+     * Populate option types
+     */
+    const typeDataOption = await transEntityMngr.save(OptionType, {
+      type: OptionTypeEnum.dataOption
+    })
+
+    const typeDisplayOption = await transEntityMngr.save(OptionType, {
+      type: OptionTypeEnum.displayOption
+    })
+
+    /**
+     * Populate widget options
+     */
+    await transEntityMngr.save(WidgetOption, {
+      key: 'directoryId',
+      value: '1',
+      optionType: typeDataOption,
+      widget: dashboardWidget1
+    })
+
+    await transEntityMngr.save(WidgetOption, {
+      key: 'directoryId',
+      value: '2',
+      optionType: typeDataOption,
+      widget: dashboardWidget1
+    })
+
+    await transEntityMngr.save(WidgetOption, {
+      key: 'color',
+      value: 'red',
+      optionType: typeDisplayOption,
+      widget: dashboardWidget1
+    })
+
+    await transEntityMngr.save(WidgetOption, {
+      key: 'directoryId',
+      value: '2',
+      optionType: typeDataOption,
+      widget: dashboardWidget2
     })
   })
 }

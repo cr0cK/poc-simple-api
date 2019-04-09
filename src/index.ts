@@ -7,7 +7,7 @@ const server = new Server()
 server
   .bindLogger(logger)
   .configureServer()
-  .configureRouter()
+  .configureRouters()
   .start()
   .then(serv => serv.connectToDB())
   .catch(err => {

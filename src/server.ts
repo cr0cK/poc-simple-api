@@ -5,10 +5,10 @@ import * as http from 'http'
 import * as morgan from 'morgan'
 import { Connection } from 'typeorm'
 import { connect } from './db'
-import { getRouter } from './getRouter'
 import { getConfig } from './libs/config'
 import { logException } from './libs/logException'
 import { ILogger } from './libs/logger'
+import { routerDashboard } from './routers/dashboard'
 
 export default class Server {
   private app: express.Express
@@ -58,8 +58,12 @@ export default class Server {
   /**
    * Configure the index router.
    */
-  configureRouter(): Server {
-    this.app.use('/', getRouter())
+  configureRouters(): Server {
+    this.app.use('/dashboards', routerDashboard())
+
+    this.app.use((req, res) => {
+      res.status(404).send()
+    })
 
     return this
   }

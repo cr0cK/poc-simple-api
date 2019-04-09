@@ -1,28 +1,38 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany
+} from 'typeorm'
 import Dashboard from './Dashboard'
+import WidgetOption from './WidgetOption'
 
 @Entity()
 export default class DashboardWidget {
   @PrimaryGeneratedColumn()
   id!: number
 
-  @Column({
-    length: 200
-  })
+  @Column({ type: 'varchar' })
   title!: string
 
-  @Column('int')
+  @Column({ type: 'int' })
   posX!: number
 
-  @Column('int')
+  @Column({ type: 'int' })
   posY!: number
 
-  @Column('int')
+  @Column({ type: 'int' })
   width!: number
 
-  @Column('int')
+  @Column({ type: 'int' })
   height!: number
 
-  @ManyToOne(type => Dashboard, dashboard => dashboard.dashboardWidgets)
+  @ManyToOne(type => Dashboard, dashboard => dashboard.dashboardWidgets, {
+    nullable: false
+  })
   dashboard!: Dashboard
+
+  @OneToMany(type => WidgetOption, widgetOption => widgetOption.widget)
+  options!: WidgetOption[]
 }
