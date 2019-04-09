@@ -4,9 +4,8 @@
   "description": "A POC for an API dead simple.",
   "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
     "start:dev": "nodemon -w src -e ts,json -x \"ts-node src/index.ts\"",
-    "compile": "tsc",
+    "start:prod": "NODE_ENV=production ts-node src/index.ts",
     "test": "jest"
   },
   "dependencies": {
