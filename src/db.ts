@@ -1,6 +1,12 @@
-import { Connection } from 'typeorm'
+import { Connection, createConnection } from 'typeorm'
 
 let connection: Connection | undefined
+
+export async function connect(): Promise<Connection> {
+  const conn = await createConnection()
+  setConnection(conn)
+  return conn
+}
 
 export function setConnection(conn: Connection): void {
   connection = conn

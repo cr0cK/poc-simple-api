@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import DashboardWidget from './DashboardWidget'
 
 @Entity()
 export default class Dashboard {
@@ -9,4 +10,10 @@ export default class Dashboard {
     length: 100
   })
   name!: string
+
+  @OneToMany(
+    type => DashboardWidget,
+    dashboardWidget => dashboardWidget.dashboard
+  )
+  dashboardWidgets!: DashboardWidget[]
 }

@@ -3,8 +3,8 @@ import * as colors from 'colors'
 import * as express from 'express'
 import * as http from 'http'
 import * as morgan from 'morgan'
-import { createConnection } from 'typeorm'
-import { setConnection } from './db'
+import { Connection } from 'typeorm'
+import { connect } from './db'
 import { getRouter } from './getRouter'
 import { getConfig } from './libs/config'
 import { logException } from './libs/logException'
@@ -102,9 +102,8 @@ export default class Server {
   /**
    * Connect to the DB and save the connection.
    */
-  async connectToDB(): Promise<void> {
-    const connection = await createConnection()
-    setConnection(connection)
+  async connectToDB(): Promise<Connection> {
+    return connect()
   }
 
   /**
