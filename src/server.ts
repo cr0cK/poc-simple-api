@@ -81,7 +81,7 @@ export default class Server {
   /**
    * Start the server.
    */
-  start(): Promise<Server> {
+  start(port?: number, host?: string): Promise<Server> {
     const config = getConfig()
     const httpServer = this.httpServer
 
@@ -89,11 +89,14 @@ export default class Server {
       throw new Error('HTTP server is undefined!')
     }
 
+    const finalPort = port || config.port
+    const finalHost = host || config.host
+
     return new Promise((resolve, reject) => {
       httpServer.listen(
-        config.port,
+        finalPort,
         // @ts-ignore ??
-        config.host,
+        finalHost,
         (err: any) => {
           if (err) {
             logException(this.logger, err, 'Error when starting the server.')
@@ -103,7 +106,7 @@ export default class Server {
 
           this.logger.info(
             `Server is listening on ${colors.bold.underline(
-              `${config.host}:${config.port}`
+              `${finalHost}:${finalPort}`
             )}.`
           )
 
@@ -117,7 +120,7 @@ export default class Server {
    * Connect to the DB and save the connection.
    */
   async connectToDB(): Promise<Connection> {
-    return connect()
+    return connect('default')
   }
 
   /**

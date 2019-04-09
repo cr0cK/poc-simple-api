@@ -7,14 +7,14 @@ import { logException } from '../libs/logException'
 import { logger } from '../libs/logger'
 import WidgetOption from '../entities/WidgetOption'
 
-async function populate() {
-  const connection = await connect()
+export async function populate(): Promise<void> {
+  const connection = await connect('default')
 
   // reset DB
   await connection.dropDatabase()
   await connection.synchronize()
 
-  await connection.transaction(async transEntityMngr => {
+  return connection.transaction(async transEntityMngr => {
     /**
      * Populate some dashboards
      */
