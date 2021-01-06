@@ -33,7 +33,7 @@
     "@types/lodash": "^4.14.123",
     "@types/morgan": "^1.7.35",
     "@types/node": "^11.13.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "faker": "^4.1.0",
     "freeport": "^1.0.5",
     "nodemon": "^1.18.11",
