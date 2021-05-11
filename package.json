@@ -15,7 +15,7 @@
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
     "jest": "^24.7.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "morgan": "^1.9.1",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^4.0.6",
